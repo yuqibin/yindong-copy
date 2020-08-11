@@ -61,13 +61,13 @@
       muted
       loop
     ></video>
-    <div class="logo">
+    <!-- <div class="logo">
       <img
         src="./imgs/yindong.png"
         alt="yindong.club"
       >
       <div class="logo-name yindong">音咚</div>
-    </div>
+    </div> -->
     <!-- 音符 -->
     <div class="yinfu-bg">
       <span
