@@ -1,0 +1,242 @@
+/*
+ * 此项目通用基础ui-css库以及项目及less变量库
+ * @Author: mikey.yuqibin 
+ * @Date: 2019-06-17 10:42:12 
+ * @Last Modified by: mikey.yuqibin
+ * @Last Modified time: 2020-07-22 17:18:09
+ */
+
+// 相对单位计算vw vh
+@import './adaptation.less';
+
+// --------------------------------------项目变量集合start-------------------------------------------
+@theme-font-color: #fff; // 字体主题色
+@ax-font-clolr: #ccc; // 字体辅助色
+@theme-bg-color: #000; // 背景主题色
+@ax-bg-color: #1A1A1A; // 背景辅助色
+@theme-hl-color: #1B5FBD; // 高亮主题色
+@ax-hl-color: #1BBDB7; // 高亮辅助色
+
+
+// --------------------------------------项目变量集合end---------------------------------------------
+
+// --------------------------------------通用UI集合start---------------------------------------------
+// padding-bottom的方式来实现高度随宽度的变化而变化 设计图基础值是宽度1920  支持padding只写上下，
+// 参数说明 跟padding顺序一致：上右下左 末尾加高度 不带单位 统一转为px
+@bw: 1920;
+
+.height-padding (@t, @r, @b, @l, @h) {
+  @tp: @t/1px;
+  padding: @tp @r/1px calc(percentage(@h / @bw) - @tp) @l/1px;
+}
+
+.height-padding (@y, @x, @h) {
+  .height-padding(@y, @x, @y, @x, @h);
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+// 关闭按钮样式 参数说明：size表示正方形的宽高，字体大小将会基于这个size实现
+// 另外注意容器下面需要一个span标签 以达到只有扇形区域可点击，不像那种看是扇形按钮其实整个正方形div都可点击
+.btn-close(@size) {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: @size / 1px;
+  height: @size / 1px;
+  color: #ccc;
+  font-size: @size / 2px;
+  overflow: hidden;
+
+  >span {
+    display: inline-block;
+    cursor: pointer;
+    position: absolute;
+    right: -100%;
+    top: -100%;
+    width: @size * 2px;
+    height: @size * 2px;
+    border-radius: 50%;
+    background: rgba(41, 41, 41, 1);
+  }
+
+  &::before {
+    cursor: pointer;
+    content: "×";
+    position: absolute;
+    font-size: @size / 1.5px;
+    width: @size / 2px;
+    height: @size / 2px;
+    line-height: @size / 2px;
+    right: @size / 10px;
+    top: @size / 10px;
+    z-index: 1;
+    pointer-events: none;
+  }
+}
+
+// 三角形尖头border
+/**
+  * 参数说明  left 三角形距离左边距离(支持各类距离单位)  
+  * size 三角形大小(px)  @bor-color 线颜色  @color 底色颜色 @width 线宽度(px)
+  */
+.popper-arrow(@left, @size, @color, @bor-color, @width) {
+  top: 0;
+  left: @left;
+  transform: translateY(-100%);
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: @size solid transparent;
+  border-right: @size solid transparent;
+  border-bottom: @size solid @bor-color;
+
+  &::after {
+    content: '';
+    top: @width;
+    left: -@size;
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: @size solid transparent;
+    border-right: @size solid transparent;
+    border-bottom: @size solid @color;
+  }
+}
+
+// 渐变色，只支持两种颜色
+.gradual-change-x (@left, @right) {
+  background: linear-gradient(to right, @left, @right)
+}
+
+.gradual-change-y (@top, @bottom) {
+  background: linear-gradient(@top, @bottom)
+}
+
+// 字号集合
+.fontSize10 {
+  .font-size(10);
+}
+
+.fontSize12 {
+  .font-size(12);
+}
+
+.fontSize14 {
+  .font-size(14);
+}
+
+.fontSize16 {
+  .font-size(16);
+}
+
+.fontSize18 {
+  .font-size(18);
+}
+
+.fontSize20 {
+  .font-size(20);
+}
+
+.fontSize24 {
+  .font-size(24);
+}
+
+.fontSize28 {
+  .font-size(28);
+}
+
+.fontSize30 {
+  .font-size(30);
+}
+
+// 上边距集合margin-top
+.margin-t10 {
+  .margin(10, 0, 0, 0);
+}
+
+.margin-t20 {
+  .margin(20, 0, 0, 0);
+}
+
+.margin-t30 {
+  .margin(30, 0, 0, 0);
+}
+
+.margin-t40 {
+  .margin(40, 0, 0, 0);
+}
+
+.margin-t50 {
+  .margin(50, 0, 0, 0);
+}
+
+.margin-t80 {
+  .margin(80, 0, 0, 0);
+}
+
+.margin-t100 {
+  .margin(100, 0, 0, 0);
+}
+
+// 字体加粗集合font-weight
+.fontWeight100 {
+  font-weight: 100;
+}
+
+.fontWeight200 {
+  font-weight: 200;
+}
+
+.fontWeight300 {
+  font-weight: 300;
+}
+
+.fontWeight400 {
+  font-weight: 400;
+}
+
+.fontWeight500 {
+  font-weight: 500;
+}
+
+.fontWeight600 {
+  font-weight: 600;
+}
+
+.fontWeight700 {
+  font-weight: 700;
+}
+
+.fontWeightB {
+  font-weight: bold;
+}
+
+// 自动向上滚动
+.auto-roll-up(@time) {
+  animation: rollUp @time infinite;
+}
+
+@keyframes rollUp {
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.cper {
+  cursor: pointer;
+}
+
+.br (@val) {
+  border-radius: @val / 1px;
+}
+
+// --------------------------------------通用UI集合end---------------------------------------------
