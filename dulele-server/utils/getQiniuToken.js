@@ -4,10 +4,12 @@ const qiniu = require('qiniu');
 const accessKey = '2lGc2mEd6lZYmfQmd3BcFWdCaEuoIRL8K4xm928q';
 const secretKey = 'pDj3tHX70TvnQeFQecMwkqHD3IFaZZLiEycCXmtY';
 
+let prdEnvFlag = process.env.NODE_ENV === 'production'
+
 const getQiniuToken = () => {
   let mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
   let options = {
-    scope: 'dulele-temporary', //临时空间  提交表单成功会把对应图片转移到生产空间
+    scope: prdEnvFlag ? 'yindong-yqb' : 'dulele-temporary', //临时空间  提交表单成功会把对应图片转移到生产空间
     expires: 24 * 60 * 60
   };
   let putPolicy = new qiniu.rs.PutPolicy(options);

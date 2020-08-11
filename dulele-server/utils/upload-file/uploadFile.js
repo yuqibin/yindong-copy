@@ -20,8 +20,8 @@ config.zone = qiniu.zone.Zone_z2;
 // 上传是否使用cdn加速
 config.useCdnDomain = true;
 let prdEnvFlag = process.env.NODE_ENV === 'production'
-config.bucket = prdEnvFlag ? 'dulele' : 'dulele-temporary'; //存储空间的名字
-config.url = prdEnvFlag ? 'www.yindong.club' : 'qdwx3lgkh.bkt.clouddn.com'; //配置的域名
+config.bucket = prdEnvFlag ? 'yindong-yqb' : 'dulele-temporary'; //存储空间的名字
+config.url = prdEnvFlag ? 'cdn.yindong.club' : 'dev.yindong.club'; //配置的域名
 
 async function uploadMp3(fileName) {
   let uploadToken = getQiniuToken() + ''

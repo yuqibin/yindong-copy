@@ -20,13 +20,13 @@ services:
     volumes: 
       - ~/data/db:/data/db
   server:
-    build: ./server
+    build: ./dulele-server
     container_name: server
     restart: always
     ports:
       - 8008:8008
     external_links:
-      - "mongodb:mongodb"
+      - "mysql:mysql"
     volumes:
       - ./server/uploads:/server/uploads
   client:

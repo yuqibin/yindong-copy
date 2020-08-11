@@ -56,7 +56,7 @@
     </div>
     <video
       class="video-bg"
-      src="http://qdvksb0kf.bkt.clouddn.com/yindong_header_bg.mp4"
+      src="http://cdn.yindong.club/yindong_header_bg.mp4"
       autoplay
       muted
       loop

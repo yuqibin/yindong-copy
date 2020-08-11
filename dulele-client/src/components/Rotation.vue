@@ -48,13 +48,13 @@ import Bus from "@/common/bus/bus";
 
 const colorList = ["#31919a", "#434361", "#8e8e58", "green", "#ccc", "#666"];
 const imgBgList = [
-  require("./imgs/weekhot1.png"),
-  require("./imgs/weekhot2.png"),
-  require("./imgs/weekhot3.png"),
-  require("./imgs/weekhot4.png"),
-  require("./imgs/weekhot5.png"),
-  require("./imgs/weekhot6.png"),
-  require("./imgs/weekhot7.png"),
+  "http://cdn.yindong.club/weekhot1.png",
+  "http://cdn.yindong.club/weekhot2.png",
+  "http://cdn.yindong.club/weekhot3.png",
+  "http://cdn.yindong.club/weekhot4.png",
+  "http://cdn.yindong.club/weekhot5.png",
+  "http://cdn.yindong.club/weekhot6.png",
+  "http://cdn.yindong.club/weekhot7.png",
 ];
 
 export default {

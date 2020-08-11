@@ -44,8 +44,9 @@
       <!-- 备案 -->
       <a
         href="http://www.beian.miit.gov.cn/"
+        target="_blank"
         class="beian fl"
-      >蒙ICP备06004630号</a>
+      >皖ICP备20014430号</a>
     </div>
     <!-- 回到顶部 -->
     <el-backtop
