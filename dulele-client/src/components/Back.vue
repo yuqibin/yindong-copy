@@ -3,7 +3,7 @@
     class="back-btn"
     @click="back"
   >
-    <span class="icon iconfont el-icon-back"></span>
+    <span class="el-icon-back"></span>
   </div>
 </template>
 
