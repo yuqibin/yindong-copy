@@ -3,11 +3,11 @@
  * @Author: mikey.yuqibin
  * @Date: 2019-08-12 15:47:54
  * @Last Modified by: mikey.yuqibin
- * @Last Modified time: 2020-08-12 17:11:03
+ * @Last Modified time: 2020-08-12 17:46:53
  */
 
 const path = require('path')
-const CompressionPlugin = require('compression-webpack-plugin')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -43,18 +43,16 @@ module.exports = {
     }
   },
   // webpack配置
-  configureWebpack: () => {
-    if (process.env.NODE_ENV === 'production') {
-      return {
-        plugins: [
-          new CompressionPlugin({
-            test: /\.js$|\.html$|\.css$|\.jpg$|\.jpeg$|\.png/, // 需要压缩的文件类型
-            threshold: 1024, // 归档需要进行压缩的文件大小最小值，我这个是10K以上的进行压缩
-            deleteOriginalAssets: false // 是否删除原文件
-          })
-        ]
-      }
-    }
+  configureWebpack: {
+    plugins: [
+      new CompressionWebpackPlugin({
+        filename: '[path].gz[query]',
+        algorithm: 'gzip',
+        test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+        threshold: 10240,
+        minRatio: 0.8
+      })
+    ]
   },
   // 配置webpack webpack-chain链式调用
   chainWebpack: config => {
