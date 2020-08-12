@@ -2,6 +2,8 @@
 node_modules
 dist
 /dist
+/dulele-admin/dist
+/dulele-client/dist
 
 # local env files
 .env.local
