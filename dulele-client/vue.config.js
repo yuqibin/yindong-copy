@@ -3,11 +3,13 @@
  * @Author: mikey.yuqibin
  * @Date: 2019-08-12 15:47:54
  * @Last Modified by: mikey.yuqibin
- * @Last Modified time: 2020-08-12 17:46:53
+ * @Last Modified time: 2020-08-12 17:48:49
  */
 
 const path = require('path')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
+// 定义压缩文件类型
+const productionGzipExtensions = ['js', 'css']
 
 function resolve(dir) {
   return path.join(__dirname, dir)
