@@ -7,14 +7,14 @@ const {
   genPassword
 } = require('../../utils/cryp');
 
-
 const xss = require('xss');
 
 const login = async (username, password) => {
   username = xss(escape(username))
+  console.log(password, typeof password, 'login>>>>>')
   password = genPassword(password)
   password = xss(escape(password))
-  // console.log(password)
+  console.log(password, typeof password, 'login>>>>>')
   let sql = `select * from users where username=${username} and password=${password}`
   const data = await exec(sql)
   if (Array.isArray(data) && data.length) {

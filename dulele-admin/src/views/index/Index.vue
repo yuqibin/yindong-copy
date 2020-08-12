@@ -1,6 +1,5 @@
 <template>
   <div class="index-wrap">
-    <!-- <Header></Header> -->
     <Title :name="'😀😃😄😁😆😅😂🤣☺️😊😇🙂🙃😉😌😍🥰😘😗😙😚😋😛😝😜🤪🤨🧐🤓😎🤩🥳'"></Title>
     <!-- 搜索 -->
     <div class="search-wrap">
@@ -36,7 +35,7 @@
         <div class="a-content">内容</div>
         <div class="a-tag">标签</div>
         <div class="a-time">创建日期</div>
-        <div class="a-readnum">被阅读次数</div>
+        <div class="a-readnum">阅读次数</div>
         <div class="a-operation">操作</div>
       </div>
       <!-- 文章列表 -->
@@ -58,7 +57,10 @@
         <div class="a-readnum">{{article.readtimes || '0'}}</div>
         <div class="a-operation">
           <!-- 查看 -->
-          <span class="look icon iconfont icon-chakan"></span>
+          <span
+            class="look icon iconfont icon-chakan"
+            @click="goArtDetail(article.id)"
+          ></span>
           <!-- 编辑 -->
           <span
             class="edit icon iconfont icon-bianji"
@@ -141,6 +143,9 @@ export default {
     init() {
       this.changeMenu();
       this.getArticleList();
+    },
+    goArtDetail(aid) {
+      window.open(`http://www.yindong.club/a/${aid}`);
     },
     // 加载更多
     loadMoreArt() {
@@ -231,6 +236,8 @@ export default {
 }
 
 .index-wrap {
+  padding: 0 0 0 200px;
+  margin: 0;
   position: relative;
   // .gradual-change-y(rgba(239, 120, 249, 0.63), rgba(120, 206, 232, 0.55));
   background: #f2f6fb;

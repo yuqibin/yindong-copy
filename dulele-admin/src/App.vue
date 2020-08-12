@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header v-if="routePath !== '/login'"></Header>
+    <Header v-if="!(routePath === '/' || routePath=== '/login')"></Header>
     <router-view class="picker" />
   </div>
 </template>
@@ -14,7 +14,7 @@ export default {
     return {};
   },
   components: {
-    Header: () => import("./components/header/Header"),
+    Header: () => import("@/components/header/Header"),
   },
   computed: {
     routePath: function () {

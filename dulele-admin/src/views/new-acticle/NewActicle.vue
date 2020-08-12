@@ -1,5 +1,6 @@
 <template>
   <div class="new-acticle-wrap">
+    <Header></Header>
     <Title :name="'😀😃😄😁😆😅😂🤣☺️😊😇🙂🙃😉😌😍🥰😘😗😙😚😋😛😝😜🤪🤨🧐🤓😎🤩🥳'"></Title>
     <div class="back-and-release">
       <span
@@ -202,6 +203,7 @@ export default {
   },
   components: {
     Title,
+    Header: () => import("@/components/header/Header"),
   },
   created() {
     this.init();
@@ -391,6 +393,8 @@ export default {
 @sblue: #4273fe;
 .new-acticle-wrap {
   // background: #f2f6fb;
+  margin: 0;
+  padding: 0 0 0 200px;
 }
 .back-and-release {
   padding: 0 40px;

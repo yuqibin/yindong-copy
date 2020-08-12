@@ -103,18 +103,57 @@ router.get('/isadmin', loginCheck, async (ctx, next) => {
   ctx.body = new SuccessModel('', 1)
 })
 
+const errTipsMap = {
+  username: {
+    name: '账号',
+    msg: '用户名格式：英文+数字',
+    len: 20
+  },
+  password: {
+    name: '密码',
+    msg: '密码格式：英文+数字',
+    len: 40
+  },
+  invcode: {
+    name: '邀请码',
+    msg: '邀请码格式：英文+数字',
+    len: 10
+  },
+  realname: {
+    name: '昵称',
+    msg: '昵称格式：中英文+数字',
+    len: 10
+  },
+  autograph: {
+    name: '签名',
+    msg: '签名格式：中英文+数字',
+    len: 255
+  }
+}
+
 // 注册账户
 router.post('/register', async (ctx, next) => {
+
   let params = ctx.request.body
-  let reg1 = /[0-9a-zA-Z\u4e00-\u9fa5]/g;
-  let reg2 = /[0-9a-zA-Z]/g;
-  let keys = ['username', 'password', 'invcode', 'realname', 'autograph']
+  let reg1 = /[0-9a-zA-Z\u4e00-\u9fa5]/;
+  let reg2 = /[0-9a-zA-Z]/;
+
+  let keys = ['username', 'password', 'invcode', 'realname']
   for (let key of keys) {
-    let chaneseFlag = key === 'realname' || key === 'autograph'
-    let regFlag = (chaneseFlag ? reg1 : reg2).test(params[key])
-    if (!regFlag) {
-      ctx.body = new ErrorModel('格式错误~昵称+签名可以中英文+数字~其他只能英文+数字')
+    let val = params[key]
+    if (val === '' || val.length > errTipsMap[key].len) {
+      ctx.body = new ErrorModel(`${errTipsMap[key].name}不能为空且长度不超过${errTipsMap[key].len}`)
       return
+    }
+    let regFlag = (key === 'realname' ? reg1 : reg2).test(val)
+    console.log(regFlag, '??', key, typeof key, val)
+    if (!regFlag) {
+      ctx.body = new ErrorModel(`${errTipsMap[key]}`)
+      return
+    }
+
+    if (key === 'password') {
+      params[key] = genPassword(params[key])
     }
     params[key] = xss(escape(params[key]))
   }
@@ -125,6 +164,17 @@ router.post('/register', async (ctx, next) => {
     realname,
     autograph
   } = params
+
+  if (autograph !== '' && !reg1.test(autograph)) {
+    ctx.body = new ErrorModel(`${errTipsMap['autograph']}`)
+    return
+  }
+  if (autograph.length > errTipsMap['autograph'].length) {
+    ctx.body = new ErrorModel(`${errTipsMap['autograph'].name}不能为空且长度不超过${errTipsMap['autograph'].len}`)
+    return
+  }
+  autograph = xss(escape(autograph))
+
   let hasinvcode = await hasInvCode(invcode)
   if (!hasinvcode) {
     ctx.body = new ErrorModel('邀请码错误~')
@@ -136,7 +186,7 @@ router.post('/register', async (ctx, next) => {
     return
   }
   let sql = `INSERT INTO users (username,` + '`password`,' + ` realname, autograph, level, uicon) 
-  values (${username},'${genPassword(password)}',${realname},${autograph}, 1, '')`
+  values (${username},${password},${realname},${autograph}, 1, '')`
   let res = await exec(sql)
   if (res && res.insertId) {
     delInvCode(invcode)

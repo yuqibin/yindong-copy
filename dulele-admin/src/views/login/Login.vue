@@ -132,7 +132,29 @@ export default {
     formSubmit() {
       this.isLogin ? this.login() : this.register();
     },
+    registerCheck() {
+      switch (true) {
+        case !this.username || this.username.length > 20:
+          this.$message.error("用户名不能为空且不能超过20个字符");
+          return false;
+        case !this.password || this.password.length > 40:
+          this.$message.error("密码不能为空且不能超过40个字符");
+          return false;
+        case !this.realname || this.realname.length > 10:
+          this.$message.error("昵称不能为空且不能超过10个字符");
+          return false;
+        case this.autograph.length > 255:
+          this.$message.error("签名不能超过255个字符");
+          return false;
+        default:
+          break;
+      }
+      return true;
+    },
     async register() {
+      if (!this.registerCheck()) {
+        return;
+      }
       let res = await register({
         username: this.username,
         password: this.password,
@@ -167,19 +189,32 @@ export default {
       let reg2 = /[^0-9a-zA-Z]/g;
       this[key] = this[key].replace(chaneseFlag ? reg1 : reg2, "");
     },
+    loginCheck() {
+      if (!this.username || this.username.length > 20) {
+        this.$message.error("用户名不能为空且不能超过20个字符");
+        return false;
+      }
+      if (!this.password || this.password.length > 40) {
+        this.$message.error("密码不能为空且不能超过40个字符");
+        return false;
+      }
+      return true;
+    },
     // 登录
-    login() {
+    async login() {
       let that = this;
-      adminLogin({
+      if (!that.loginCheck()) {
+        return;
+      }
+      let res = await adminLogin({
         username: this.username,
         password: this.password,
-      }).then((res) => {
-        if (res.data && res.data.code === 0) {
-          that.sessionHandle();
-        } else {
-          that.$message.error("账户或密码错误~");
-        }
       });
+      if (res.data && res.data.code === 0) {
+        that.sessionHandle();
+      } else {
+        that.$message.error("账户或密码错误~");
+      }
     },
     // 登陆成功
     sessionHandle() {

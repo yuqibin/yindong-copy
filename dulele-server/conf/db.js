@@ -8,7 +8,7 @@ if (env === 'dev') {
   MYSQL_CONF = {
     host: 'localhost',
     user: 'root',
-    password: 'qweRdfgg123_',
+    password: 'qwerdfgg',
     port: 3306,
     database: 'dulele'
   }
