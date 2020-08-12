@@ -1,11 +1,38 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import './registerServiceWorker'
+// import './registerServiceWorker'
 import 'element-ui/lib/theme-chalk/index.css';
-import ElementUI from 'element-ui';
+// import {
+//   Button,
+//   Slider,
+//   Popover,
+//   Backtop,
+//   Input
+// } from 'element-ui';
+import {
+  Button
+} from 'element-ui/lib/button';
+import {
+  Slider
+} from 'element-ui/lib/slider';
+import {
+  Popover
+} from 'element-ui/lib/popover';
+import {
+  Backtop
+} from 'element-ui/lib/backtop';
+import {
+  Input
+} from 'element-ui/lib/input';
 
-Vue.use(ElementUI);
+Vue.component(Backtop.name, Backtop);
+Vue.component(Button.name, Button);
+Vue.component(Slider.name, Slider);
+Vue.component(Popover.name, Popover);
+Vue.component(Input.name, Input);
+// import ElementUI from 'element-ui'
+// Vue.use(ElementUI)
 
 const Showdown = require("showdown");
 const keys = Object.keys(Showdown.getDefaultOptions());

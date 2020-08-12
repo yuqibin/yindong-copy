@@ -3,10 +3,11 @@
  * @Author: mikey.yuqibin
  * @Date: 2019-08-12 15:47:54
  * @Last Modified by: mikey.yuqibin
- * @Last Modified time: 2020-08-07 09:47:26
+ * @Last Modified time: 2020-08-12 17:11:03
  */
 
 const path = require('path')
+const CompressionPlugin = require('compression-webpack-plugin')
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -15,7 +16,7 @@ function resolve(dir) {
 module.exports = {
   // 上线二级域名
   publicPath: '/',
-  // 打包不生成map文件
+  // 生产环境是否生成 sourceMap 文件
   productionSourceMap: false,
   devServer: {
     proxy: {
@@ -41,8 +42,34 @@ module.exports = {
       msTileImage: 'favicon.ico'
     }
   },
+  // webpack配置
+  configureWebpack: () => {
+    if (process.env.NODE_ENV === 'production') {
+      return {
+        plugins: [
+          new CompressionPlugin({
+            test: /\.js$|\.html$|\.css$|\.jpg$|\.jpeg$|\.png/, // 需要压缩的文件类型
+            threshold: 1024, // 归档需要进行压缩的文件大小最小值，我这个是10K以上的进行压缩
+            deleteOriginalAssets: false // 是否删除原文件
+          })
+        ]
+      }
+    }
+  },
   // 配置webpack webpack-chain链式调用
   chainWebpack: config => {
+    /* 添加分析工具*/
+    if (process.env.NODE_ENV === 'production') {
+      console.log('>>>>>>>', process.env.NODE_ENV)
+      config.plugins.delete('prefetch')
+      if (process.env.npm_config_report) {
+        config
+          .plugin('webpack-bundle-analyzer')
+          .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
+          .end();
+      }
+    }
+    // config.plugins.delete('prefetch')
     // config.entry.app = ['babel-polyfill', './src/main.js']
     config
       .resolve.alias

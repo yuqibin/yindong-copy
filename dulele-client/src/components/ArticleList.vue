@@ -32,7 +32,7 @@
           </div>
           <div class="control">
             <span
-              class="add icon iconfont el-icon-plus"
+              class="add el-icon-plus"
               @click="addToListOne(a)"
             ></span>
             <span

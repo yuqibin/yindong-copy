@@ -45,7 +45,7 @@
               class="add"
               @click="addToListAll"
             >
-              <span class="icon iconfont el-icon-plus"></span>
+              <span class="icon  el-icon-plus"></span>
               ALL
             </span>
           </span>
@@ -62,7 +62,7 @@
           >{{a.title}}</span>
           <div class="play-add">
             <span
-              class="add icon iconfont el-icon-plus"
+              class="add icon el-icon-plus"
               @click.stop="addToListOne(a)"
             ></span>
             <span

@@ -57,7 +57,6 @@
 </template>
 
 <script>
-console.log(">>>>>>>>", process.env);
 import { getWeekHot, getAuthorList } from "@/api/service";
 export default {
   name: "",

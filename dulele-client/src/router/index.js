@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 // component: () => import('../views/About.vue')
+// resolve => require(['@/views/index/index'], resolve)
 
 Vue.use(VueRouter)
 
