@@ -269,6 +269,10 @@ export default {
       return list;
     },
     currPlayText: function () {
+      let ddd = this.$markdowner.makeHtml(
+        escapeHtml(this.currPlay.content || "")
+      );
+      console.log(ddd);
       return this.$markdowner.makeHtml(escapeHtml(this.currPlay.content || ""));
     },
     // 当前播放对象

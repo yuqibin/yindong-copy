@@ -124,9 +124,7 @@ export default {
           return {
             id: v.aid,
             audiourl: v.audiourl,
-            content: v.acontent
-              .replace(/[^0-9a-zA-Z\u4e00-\u9fa5]/g, "")
-              .slice(0, 200),
+            content: v.acontent,
             author: v.aauthor,
             readtimes: v.readtimes,
             coverphoto: v.coverphoto,

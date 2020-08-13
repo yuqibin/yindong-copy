@@ -23,7 +23,7 @@
       <p
         class="text ell3"
         @click="goArtDetail(a.id)"
-        v-html="a.content"
+        v-html="clipContentText(a.content)"
       ></p>
       <span
         class="play icon iconfont iconplay"
@@ -100,6 +100,9 @@ export default {
     },
     play(curr) {
       Bus.$emit("addToList", [curr], true);
+    },
+    clipContentText(text) {
+      return text.replace(/[^0-9a-zA-Z\u4e00-\u9fa5]/g, "").slice(0, 200);
     },
     mouseOver() {
       this.mouseFlag = 1;
