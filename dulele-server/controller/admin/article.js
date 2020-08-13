@@ -70,7 +70,7 @@ const newArticle = async (params = {}) => {
       return ''
     }
     let sql = `insert into article (title, content, createtime, author, tag, coverphoto, audiourl) 
-    VALUES (${title}, ${content}, ${createtime}, ${author}, ${tag}, ${coverphoto}, '${audiourl}')`
+    VALUES (${title}, "${content}", ${createtime}, ${author}, ${tag}, ${coverphoto}, '${audiourl}')`
     return await exec(sql)
   }
   return ''

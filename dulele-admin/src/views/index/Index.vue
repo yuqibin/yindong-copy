@@ -236,8 +236,6 @@ export default {
 }
 
 .index-wrap {
-  padding: 0 0 0 200px;
-  margin: 0;
   position: relative;
   // .gradual-change-y(rgba(239, 120, 249, 0.63), rgba(120, 206, 232, 0.55));
   background: #f2f6fb;

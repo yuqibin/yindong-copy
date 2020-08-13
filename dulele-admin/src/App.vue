@@ -59,11 +59,12 @@ export default {
   position: relative;
 }
 .picker {
-  width: 100vw;
+  width: calc(100% - 200px);
   height: 100vh;
+  margin: 0 0 0 200px;
   overflow: hidden;
   position: relative;
-  margin: 0 0 0 200px;
+  // padding: 0 0 0 200px;
   background-color: #f2f6fb;
 }
 

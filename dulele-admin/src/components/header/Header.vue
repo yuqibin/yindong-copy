@@ -260,7 +260,6 @@ export default {
 }
 
 .header-wrap {
-  z-index: 1;
   position: absolute;
   width: 200px;
   height: 100%;
