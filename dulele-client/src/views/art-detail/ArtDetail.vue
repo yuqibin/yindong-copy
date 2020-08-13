@@ -20,7 +20,7 @@
           <span><span class="words icon iconfont iconwords"></span>{{art.content.length}}</span>
           <CopyText :c-text="cText"></CopyText>
           <span
-            class="add el-icon-plus"
+            class="add icon el-icon-plus"
             @click="addToListOne(art)"
           ></span>
           <span

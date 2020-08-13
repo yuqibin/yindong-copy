@@ -54,13 +54,6 @@
         </el-popover>
       </div>
     </div>
-    <video
-      class="video-bg"
-      src="http://cdn.yindong.club/yindong_header_bg.mp4"
-      autoplay
-      muted
-      loop
-    ></video>
     <!-- <div class="logo">
       <img
         src="./imgs/yindong.png"
@@ -68,22 +61,11 @@
       >
       <div class="logo-name yindong">音咚</div>
     </div> -->
-    <!-- 音符 -->
-    <div class="yinfu-bg">
-      <span
-        class="icon iconfont"
-        :class="makeYinFuIconClass()"
-        :style="makeIconStyle(icon)"
-        v-for="icon in 28"
-        :key="icon"
-      ></span>
-    </div>
   </div>
 </template>
 
 <script>
 import { getMenuList } from "@/api/service";
-import { getRandomColor, randomMn } from "@/common/utils/utils";
 export default {
   name: "header-c",
   data() {
@@ -135,22 +117,6 @@ export default {
       this.currMenu = menu ? menu.name : "";
       this.$router.push(menu ? `/${menu.name}` : "/");
     },
-    makeYinFuIconClass() {
-      let classList = ["fade-in-out", "yfrotate", "yf-fade-top", "fade-scale"];
-      let i = Math.floor(Math.random() * classList.length);
-      return `iconyf${randomMn(1, 16)} ${classList[i]}`;
-    },
-    // 生成  五线谱 icon  颜色
-    makeIconStyle(num) {
-      let j = 7;
-      let p = Math.floor(100 / j);
-      let x =
-        num < p
-          ? randomMn(num * j, (num + 1) * j)
-          : randomMn((num - p) * j, (num - p + 1) * j);
-      let y = num < p ? randomMn(0, 30) : randomMn(35, 75);
-      return `color: ${getRandomColor()};left:${x}%;top:${y}%;`;
-    },
     // 获取导航菜单列表
     async getMenuList() {
       let res = (await getMenuList()).data;
@@ -168,35 +134,21 @@ export default {
 @theme-bg-color: #eef5ff;
 @theme-color: #ce240a;
 
-@media screen and (max-width: 1243px) {
-  .video-bg {
-    height: 100%;
-  }
-}
 
-@media screen and (min-width: 1243px) {
-  .video-bg {
-    width: 100%;
-  }
-}
 
 .header-wrap {
   min-width: 800px;
   width: 100%;
-  height: 150px;
-  background: #fff;
+  height: 50px;
+  // background: #fff;
+  background: linear-gradient(rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.65));
   overflow: hidden;
   position: relative;
+  box-shadow: 0 0 8px #dadada;
   .header-img-bg,
   // &.curr {
   //   height: 45px;
   // }
-  video {
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translate(-50%, 0);
-  }
   .logo {
     position: absolute;
     width: 200px;
@@ -228,12 +180,12 @@ export default {
 .m-header {
   z-index: 1;
   width: 100%;
-  height: 40px;
-  color: #fff;
+  height: 50px;
+  color: #333;
   position: relative;
   display: flex;
   justify-content: space-between;
-  line-height: 40px;
+  line-height: 50px;
   padding: 0 16px 0 40px;
   > div {
     flex: 1;
@@ -249,21 +201,21 @@ export default {
       padding: 0 6px;
       cursor: pointer;
       transition: 0.15s;
-      color: #ccc;
+      color: #333;
       line-height: 50px;
       &:hover {
+        color: #666;
         color: #fff;
+        text-shadow: 0px 0px 14px #f33838;
       }
       &.curr {
         color: #fff;
-        text-shadow: 0px 0px 18px #f33838;
-        transform: translateY(-10%);
+        text-shadow: 0px 0px 14px #f33838;
+        // transform: translateY(-10%);
       }
     }
   }
   .search-wrap {
-    // min-width: 100px;
-    // max-width: 200px;
     height: 26px;
     margin: 10px 30px 0 30px;
     border-radius: 12px;
@@ -272,6 +224,7 @@ export default {
     padding: 0 8px 0 12px;
     align-content: center;
     justify-content: space-between;
+    background: rgba(234, 234, 234, 0.5);
     .search-input  {
       width: 80%;
       input {
@@ -293,10 +246,10 @@ export default {
       height: 100%;
       font-size: 18px;
       height: 26px;
-      color: #333;
+      color: #999;
       text-align: center;
       line-height: 26px;
-      // background: #999;
+      background: transparent;
       border-radius: 12px;
       transform: translateX(1px);
       cursor: pointer;
@@ -310,7 +263,7 @@ export default {
     display: flex;
     justify-content: flex-end;
     .authors {
-      margin: 5px 16px 0 0;
+      margin: 10px 16px 0 0;
       height: 30px;
       line-height: 30px;
       padding: 0 12px;
@@ -339,88 +292,4 @@ export default {
   }
 }
 
-.yinfu-bg {
-  opacity: 0.4;
-  position: absolute;
-  width: 100%;
-  height: calc(100% - 40px);
-  left: 0;
-  top: 40px;
-  .icon {
-    position: absolute;
-    font-size: 30px;
-    transition: all 0.35s;
-    &.fade-in-out {
-      animation: fadeInOut 6s linear infinite forwards;
-    }
-    &.yfrotate {
-      animation: yfrotate 6s linear infinite forwards;
-    }
-    &.yf-fade-top {
-      animation: yffadetop 6s linear infinite forwards;
-    }
-    &.fade-scale {
-      animation: fadescale 6s linear infinite forwards;
-    }
-  }
-  .line {
-    display: block;
-    width: 100%;
-    height: 2px;
-    // background: @theme-bg-color;
-    margin: 12px 0 0 0;
-    &:first-child {
-      margin: 0;
-    }
-  }
-}
-
-@keyframes fadeInOut {
-  30% {
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 0.3;
-  }
-  80% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes yfrotate {
-  100% {
-    transform: rotateZ(360deg);
-  }
-}
-@keyframes yffadetop {
-  0% {
-    opacity: 0;
-  }
-  45% {
-    opacity: 1;
-  }
-  55% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-50%);
-  }
-}
-
-@keyframes fadescale {
-  0% {
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.2);
-  }
-  100% {
-    opacity: 0.3;
-  }
-}
 </style>

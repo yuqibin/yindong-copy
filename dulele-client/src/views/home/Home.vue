@@ -42,11 +42,12 @@
         ></ArticleList>
       </div>
       <!-- 备案 -->
-      <a
-        href="http://www.beian.miit.gov.cn/"
-        target="_blank"
-        class="beian fl"
-      >皖ICP备20014430号</a>
+      <div class="beian fl">
+        <a
+          href="http://www.beian.miit.gov.cn/"
+          target="_blank"
+        >皖ICP备20014430号</a>
+      </div>
     </div>
     <!-- 回到顶部 -->
     <el-backtop

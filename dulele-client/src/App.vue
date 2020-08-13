@@ -34,10 +34,10 @@ export default {
 
 /* 设置持续时间和动画函数 cubic-bezier(1, 0.5, 0.8, 1) */
 .slide-fade-enter-active {
-  transition: all 0.5s ease 0.5s;
+  transition: all 0.25s ease 0.25s;
 }
 .slide-fade-leave-active {
-  transition: all 0.5s ease;
+  transition: all 0.25s ease;
 }
 .slide-fade-enter,
 .slide-fade-leave-to {
@@ -58,7 +58,7 @@ body {
 }
 
 body .module-wrap {
-  height: calc(100vh - 226px);
+  height: calc(100vh - 126px);
   overflow: hidden;
   position: relative;
   overflow-y: auto;
@@ -69,14 +69,14 @@ body .module-wrap {
   }
   /* 滚动槽 -- 背景 */
   &::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.1);
   }
 
   /* 滚动条滑块 */
   &::-webkit-scrollbar-thumb {
     width: 5px;
     border-radius: 2px;
-    background: #666;
+    background: #999;
     // background-image: url("./assets/imgs/bg-frosting.png");
   }
   .container {
@@ -104,7 +104,7 @@ body .module-wrap {
   /* 滚动槽 -- 背景 */
   &::-webkit-scrollbar-track {
     border-radius: 10px;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.4);
   }
 
   /* 滚动条滑块 */
@@ -124,7 +124,7 @@ body {
   overflow-x: hidden;
   width: 100vw;
   min-height: 100vh;
-  background-image: url("./assets/imgs/bg-frosting.png");
+  // background-image: url("./assets/imgs/bg-frosting.png");
   background-color: rgb(136, 173, 166);
   background-color: #eef5ff;
   font-family: eafont, Hiragino Sans GB, Hiragino Sans GB W3, Microsoft YaHei,

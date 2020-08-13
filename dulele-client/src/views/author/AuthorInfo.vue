@@ -45,7 +45,7 @@
               class="add"
               @click="addToListAll"
             >
-              <span class="icon  el-icon-plus"></span>
+              <span class="icon el-icon-plus"></span>
               ALL
             </span>
           </span>

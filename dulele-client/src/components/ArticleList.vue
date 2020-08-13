@@ -32,7 +32,7 @@
           </div>
           <div class="control">
             <span
-              class="add el-icon-plus"
+              class="add icon el-icon-plus"
               @click="addToListOne(a)"
             ></span>
             <span
@@ -215,7 +215,7 @@ export default {
   .article-detail {
     z-index: 1;
     position: relative;
-    padding: 40px 50px;
+    padding: 20px 50px 40px 50px;
     width: 100%;
     // display: flex;
     // text-align: right;
@@ -246,11 +246,11 @@ export default {
     }
     .mon-list {
       padding-left: 30px;
-      border-left: 1px solid #f3fafd;
+      border-left: 1px dashed #cadfff;
       margin-left: 6px;
       li {
         padding: 25px 0;
-        border-bottom: 1px solid #f3fafd;
+        border-bottom: 1px dashed #cadfff;
         display: flex;
         justify-content: space-between;
         &:hover {
