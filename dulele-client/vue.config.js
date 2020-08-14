@@ -3,7 +3,7 @@
  * @Author: mikey.yuqibin
  * @Date: 2019-08-12 15:47:54
  * @Last Modified by: mikey.yuqibin
- * @Last Modified time: 2020-08-12 17:48:49
+ * @Last Modified time: 2020-08-14 11:14:39
  */
 
 const path = require('path')
@@ -60,7 +60,6 @@ module.exports = {
   chainWebpack: config => {
     /* 添加分析工具*/
     if (process.env.NODE_ENV === 'production') {
-      console.log('>>>>>>>', process.env.NODE_ENV)
       config.plugins.delete('prefetch')
       if (process.env.npm_config_report) {
         config
