@@ -19,8 +19,8 @@ module.exports = function () {
   return async (ctx, next) => {
     if (flag) {
       // 每次重启执行一次
-      setWeekHot()
       flag = 0
+      setWeekHot()
       schedule.scheduleJob('0 0 0 * * 1', () => {
         // 每周1 00:00执行一次
         setWeekHot()
@@ -32,11 +32,11 @@ module.exports = function () {
 
 // 计算出本周热门文章并清空表之后塞入数据
 async function setWeekHot() {
+  flag = 0
   let aWeekAgoTime = Date.now() - (7 * 24 * 60 * 60 * 1000)
   let sql = `SELECT * FROM article WHERE createtime>${aWeekAgoTime} ORDER BY readtimes desc`
   let resutList = await exec(sql)
-  console.log(resutList, '>>>>>>>')
-  if (resutList && Array.isArray(resutList) && resutList.length > 1) {
+  if (resutList && Array.isArray(resutList) && resutList.length > 2) {
     // 清空表
     await exec(`DELETE from weekhot`)
     // 最多保留前7
@@ -47,7 +47,7 @@ async function setWeekHot() {
         `INSERT INTO weekhot ( aid, aauthor, atitle, readtimes, authorid, acontent, coverphoto, audiourl ) VALUES 
         (${d.id}, '${userMap[d.author].realname || '佚名'}', '${d.title}', ${d.readtimes}, ${userMap[d.author].authorid},
         '${d.content}','${d.coverphoto}','${d.audiourl}')`
-      await exec(setSql)
+      exec(setSql)
     }
   }
 }

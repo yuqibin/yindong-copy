@@ -4,7 +4,7 @@ dist
 /dist
 /dulele-admin/dist
 /dulele-client/dist
-*.mp3
+dulele*.mp3
 *.log
 # local env files
 .env.local
