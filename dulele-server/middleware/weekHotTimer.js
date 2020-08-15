@@ -36,6 +36,7 @@ async function setWeekHot() {
   let aWeekAgoTime = Date.now() - (7 * 24 * 60 * 60 * 1000)
   let sql = `SELECT * FROM article WHERE createtime>${aWeekAgoTime} ORDER BY readtimes desc`
   let resutList = await exec(sql)
+  console.log(resutList.length, '>>>>>>>', sql)
   if (resutList && Array.isArray(resutList) && resutList.length > 2) {
     // 清空表
     await exec(`DELETE from weekhot`)
