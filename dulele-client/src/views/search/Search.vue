@@ -151,6 +151,7 @@ export default {
     margin: 0 auto;
     li {
       cursor: pointer;
+      overflow: hidden;
       border-top: 1px solid #ccc;
       padding: 20px 40px 40px 40px;
       &:hover {
