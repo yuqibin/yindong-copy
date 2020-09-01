@@ -112,7 +112,7 @@ async function text2audio(text) {
         // 填充business
         // "vcn": "xiaoyan",
         "business": {
-          "vcn": "x2_yezi",
+          "vcn": "xiaoyan",
           "aue": "lame",
           "sfl": 1, //存储为Mp3格式
           "auf": "audio/L16;rate=16000",
