@@ -4,7 +4,7 @@
     <!-- 登陆表单 -->
     <div class="form-bg">
       <div class="form">
-        <span class="fr icon iconfont icon-guanbi"></span>
+        <!-- <span class="fr icon iconfont icon-guanbi"></span> -->
         <div class="panfish">
           <img class="normal" :class="{'curr' : logoState === 'normal'}" src="./imgs/normal.png" alt="logo">
           <img class="blindfold" :class="{'curr' : logoState === 'blindfold'}" src="./imgs/blindfold.png" alt="logo">
