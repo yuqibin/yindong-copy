@@ -3,12 +3,14 @@
  * @Author: mikey.yuqibin
  * @Date: 2019-06-14 11:31:06
  * @Last Modified by: mikey.yuqibin
- * @Last Modified time: 2020-08-03 16:03:10
+ * @Last Modified time: 2021-03-16 18:27:35
  */
 import axios from 'axios'
 import {
   splicingUrl
 } from '@/common/utils/utils'
+
+console.log(process.env.VUE_APP_BASEURL, '??')
 
 const requestAxios = axios.create({
   baseURL: process.env.VUE_APP_BASEURL,

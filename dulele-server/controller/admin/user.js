@@ -18,6 +18,8 @@ const login = async (username, password) => {
   let sql = `select * from users where username=${username} and password=${password}`
   const data = await exec(sql)
   if (Array.isArray(data) && data.length) {
+  console.log(data)
+
     return data[0]
   }
   return ''

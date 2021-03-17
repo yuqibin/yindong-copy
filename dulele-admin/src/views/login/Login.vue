@@ -1,85 +1,23 @@
 <template>
   <div class="admin-login-wrap">
-    <div
-      class="move-bg"
-      ref="moveImg"
-    ></div>
+    <div class="move-bg" ref="moveImg"></div>
     <!-- 登陆表单 -->
     <div class="form-bg">
       <div class="form">
         <span class="fr icon iconfont icon-guanbi"></span>
         <div class="panfish">
-          <img
-            class="normal"
-            :class="{'curr' : logoState === 'normal'}"
-            src="./imgs/normal.png"
-            alt="logo"
-          >
-          <img
-            class="blindfold"
-            :class="{'curr' : logoState === 'blindfold'}"
-            src="./imgs/blindfold.png"
-            alt="logo"
-          >
-          <img
-            class="greeting"
-            :class="{'curr' : logoState === 'greeting'}"
-            src="./imgs/greeting.png"
-            alt="logo"
-          >
+          <img class="normal" :class="{'curr' : logoState === 'normal'}" src="./imgs/normal.png" alt="logo">
+          <img class="blindfold" :class="{'curr' : logoState === 'blindfold'}" src="./imgs/blindfold.png" alt="logo">
+          <img class="greeting" :class="{'curr' : logoState === 'greeting'}" src="./imgs/greeting.png" alt="logo">
         </div>
         <!-- title -->
         <h1>{{isLogin ? '登录' : '注册'}}</h1>
-        <input
-          @blur="logoState = 'normal'"
-          @focus="logoState = 'greeting'"
-          @input="userInputing('username', 0)"
-          class="name"
-          type="text"
-          v-model="username"
-          placeholder="请输入账号..."
-        >
-        <input
-          @blur="logoState = 'normal'"
-          @focus="logoState = 'blindfold'"
-          @input="userInputing('password', 0)"
-          class="pwd"
-          type="password"
-          v-model="password"
-          @keyup.enter="pwdEnter()"
-          placeholder="请输入密码..."
-        >
-        <input
-          v-if="!isLogin"
-          @blur="logoState = 'normal'"
-          @focus="logoState = 'greeting'"
-          @input="userInputing('invcode', 0)"
-          type="text"
-          v-model="invcode"
-          placeholder="请输入邀请码...(必填)"
-        >
-        <input
-          v-if="!isLogin"
-          @blur="logoState = 'normal'"
-          @focus="logoState = 'greeting'"
-          @input="userInputing('realname', 1)"
-          type="text"
-          v-model="realname"
-          placeholder="请输入作者昵称...(必填)"
-        >
-        <input
-          v-if="!isLogin"
-          @blur="logoState = 'normal'"
-          @focus="logoState = 'greeting'"
-          type="text"
-          @input="userInputing('autograph', 1)"
-          v-model="autograph"
-          placeholder="请输入个性签名...(非必填)"
-        >
-        <button
-          @click="formSubmit"
-          class="submit-btn"
-        >{{isLogin ? '登录' : '注册'}}</button>
+        <input @blur="logoState = 'normal'" @focus="logoState = 'greeting'" @input="userInputing('username', 0)" class="name" type="text" v-model="username" placeholder="请输入账号...">
+        <input @blur="logoState = 'normal'" @focus="logoState = 'blindfold'" @input="userInputing('password', 0)" class="pwd" type="password" v-model="password" @keyup.enter="pwdEnter()" placeholder="请输入密码...">
+        <input v-if="!isLogin" @blur="logoState = 'normal'" @focus="logoState = 'greeting'" @input="userInputing('invcode', 0)" type="text" v-model="invcode" placeholder="请输入邀请码...(必填)">
+        <input v-if="!isLogin" @blur="logoState = 'normal'" @focus="logoState = 'greeting'" @input="userInputing('realname', 1)" type="text" v-model="realname" placeholder="请输入作者昵称...(必填)">
+        <input v-if="!isLogin" @blur="logoState = 'normal'" @focus="logoState = 'greeting'" type="text" @input="userInputing('autograph', 1)" v-model="autograph" placeholder="请输入个性签名...(非必填)">
+        <button @click="formSubmit" class="submit-btn">{{isLogin ? '登录' : '注册'}}</button>
         <p class="register-btn"><span @click="isLogin = !isLogin">{{isLogin ? '注册' : '登录'}}</span></p>
       </div>
     </div>
@@ -91,7 +29,7 @@ import { adminLogin, getUserInfo, register } from "@/api/service";
 import adminRouts from "../../router/admin";
 export default {
   name: "login",
-  data() {
+  data () {
     return {
       isLogin: true,
       logoState: "normal",
@@ -102,10 +40,10 @@ export default {
       autograph: "",
     };
   },
-  created() {
+  created () {
     this.init();
   },
-  mounted() {
+  mounted () {
     let that = this;
 
     window.addEventListener(
@@ -117,10 +55,10 @@ export default {
     );
   },
   methods: {
-    init() {
+    init () {
       this.getUserInfo();
     },
-    bgMove(e) {
+    bgMove (e) {
       let center = [window.innerWidth / 2, window.innerHeight / 2];
       let pickX = (center[0] - e.x) / 40 + "px";
       let pickY = (center[1] - e.y) / 40 + "px";
@@ -129,10 +67,10 @@ export default {
       }
       this.$refs.moveImg.style.backgroundPosition = `${pickX} ${pickY}`;
     },
-    formSubmit() {
+    formSubmit () {
       this.isLogin ? this.login() : this.register();
     },
-    registerCheck() {
+    registerCheck () {
       switch (true) {
         case !this.username || this.username.length > 20:
           this.$message.error("用户名不能为空且不能超过20个字符");
@@ -151,7 +89,7 @@ export default {
       }
       return true;
     },
-    async register() {
+    async register () {
       if (!this.registerCheck()) {
         return;
       }
@@ -171,7 +109,7 @@ export default {
       }
     },
     // 获取用户信息
-    getUserInfo() {
+    getUserInfo () {
       let that = this;
       getUserInfo().then((res) => {
         res = res.data || {};
@@ -180,16 +118,16 @@ export default {
         }
       });
     },
-    goRegister() {},
-    pwdEnter() {
+    goRegister () { },
+    pwdEnter () {
       this.login();
     },
-    userInputing(key, chaneseFlag) {
+    userInputing (key, chaneseFlag) {
       let reg1 = /[^0-9a-zA-Z\u4e00-\u9fa5]/g;
       let reg2 = /[^0-9a-zA-Z]/g;
       this[key] = this[key].replace(chaneseFlag ? reg1 : reg2, "");
     },
-    loginCheck() {
+    loginCheck () {
       if (!this.username || this.username.length > 20) {
         this.$message.error("用户名不能为空且不能超过20个字符");
         return false;
@@ -201,7 +139,7 @@ export default {
       return true;
     },
     // 登录
-    async login() {
+    async login () {
       let that = this;
       if (!that.loginCheck()) {
         return;
@@ -217,7 +155,7 @@ export default {
       }
     },
     // 登陆成功
-    sessionHandle() {
+    sessionHandle () {
       let that = this;
       that.$router.addRoutes(adminRouts);
       that.$router.push("/index");
@@ -230,7 +168,7 @@ export default {
 .br2 () {
   border-radius: 2px;
 }
-@import url("../../assets/css/adaptation.less");
+@import url('../../assets/css/adaptation.less');
 .canvas-night {
   width: 100vw;
   height: 100vh;
@@ -245,6 +183,7 @@ export default {
   margin: 0;
   padding: 0;
   background-color: rgba(0, 0, 0, 0);
+  width: 100% !important;
 }
 .form-bg {
   display: flex;
@@ -262,7 +201,7 @@ export default {
 .move-bg {
   width: 100vw;
   height: 100vh;
-  background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1595326050201&di=459f2b255b3d459b3873e51b663a6d6f&imgtype=0&src=http%3A%2F%2Fbbs.orzice.com%2Fdata%2Fattachment%2Fforum%2F201802%2F14%2F102510j91highd9zieecdh.jpg");
+  background-image: url('./imgs/bg-img.jpeg');
   background-size: cover;
   position: fixed;
   top: 0;

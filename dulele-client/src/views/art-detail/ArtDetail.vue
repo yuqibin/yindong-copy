@@ -1,17 +1,12 @@
 <template>
   <div class="art-detail-wrap">
     <BackBtn></BackBtn>
-
+    <div class="play-btn">
+      <span class="play icon iconfont iconplay" @click="addToPlayOne(art)"></span>
+    </div>
     <div class="container">
-      <SubTitle
-        :title-name="'文章详情~'"
-        :icon-name="'iconxbq1'"
-        :class-name="'wenzhangxingqing'"
-      ></SubTitle>
-      <div
-        class="art"
-        v-if="art"
-      >
+      <SubTitle :title-name="'文章详情~'" :icon-name="'iconxbq1'" :class-name="'wenzhangxingqing'"></SubTitle>
+      <div class="art" v-if="art">
         <h1> {{art.title}} </h1>
         <div class="tips">
           <span class="author">作者: <span @click="goAthorInfo(art.authorid)">{{art.author}}</span></span>
@@ -19,27 +14,12 @@
           <span><span class="icon iconfont iconreadtimes"></span>{{art.readtimes}}</span>
           <span><span class="words icon iconfont iconwords"></span>{{art.content.length}}</span>
           <CopyText :c-text="cText"></CopyText>
-          <span
-            class="add icon el-icon-plus"
-            @click="addToListOne(art)"
-          ></span>
-          <span
-            class="play icon iconfont iconplay"
-            @click="addToPlayOne(art)"
-          ></span>
+          <span class="add icon el-icon-plus" @click="addToListOne(art)"></span>
         </div>
-        <div
-          id="nice"
-          ref="mdnice"
-          class="markdown-body"
-          v-html="markdowner.makeHtml(escapeHtml(art.content))"
-        ></div>
+        <div id="nice" ref="mdnice" class="markdown-body" v-html="markdowner.makeHtml(escapeHtml(art.content))"></div>
       </div>
     </div>
-    <el-backtop
-      :bottom="80"
-      target=".art-detail-wrap"
-    ></el-backtop>
+    <el-backtop :bottom="80" target=".art-detail-wrap"></el-backtop>
   </div>
 </template>
 
@@ -63,7 +43,7 @@ const monTextMap = [
 ];
 export default {
   name: "art-detail",
-  data() {
+  data () {
     return {
       // markdown 实例对象
       markdowner: this.$markdowner,
@@ -93,28 +73,28 @@ export default {
     CopyText: () => import("../../components/CopyText"),
     SubTitle: () => import("../../components/SubTitle"),
   },
-  created() {
+  created () {
     this.init();
   },
   methods: {
-    init() {
+    init () {
       this.getDetailList();
     },
-    escapeHtml(html) {
+    escapeHtml (html) {
       return escapeHtml(html);
     },
-    goAthorInfo(auid) {
+    goAthorInfo (auid) {
       this.$router.push(`/author/${auid}`);
     },
     // 播放单个
-    addToPlayOne(a) {
+    addToPlayOne (a) {
       Bus.$emit("addToList", [a], true);
     },
     // 添加单个
-    addToListOne(a) {
+    addToListOne (a) {
       Bus.$emit("addToList", [a]);
     },
-    async getDetailList() {
+    async getDetailList () {
       let res = await getDetailList({ idlist: [this.$route.params.aid] });
       res = res.data;
       if (res.code === 0 && Array.isArray(res.data) && res.data.length) {
@@ -130,6 +110,32 @@ export default {
   font-weight: 400;
   font-family: eafont, Hiragino Sans GB, Hiragino Sans GB W3, Microsoft YaHei,
     WenQuanYi Micro Hei, sans-serif;
+  .play-btn {
+    position: fixed;
+    top: 212px;
+    left: 30px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: inline-block;
+    color: #fff;
+    background: #ce240a;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.22);
+    z-index: 5;
+    &:hover {
+      background: rgba(182, 28, 5, 0.9);
+      color: #fff !important;
+    }
+    .play {
+      font-size: 24px;
+    }
+  }
   .art {
     position: relative;
     min-width: 1000px;
@@ -152,6 +158,7 @@ export default {
     font-size: 13px;
     margin: 22px 0 0 0;
     .author {
+      // margin: 0 0 0 30px;
       span {
         cursor: pointer;
         color: #000;
@@ -161,12 +168,10 @@ export default {
         }
       }
     }
-    span {
+    > span {
       margin: 0 30px 0 0;
     }
-    .play {
-      cursor: pointer;
-    }
+
     .icon {
       margin: 0 4px 0 0;
       font-size: 16px;

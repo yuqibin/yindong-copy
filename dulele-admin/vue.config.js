@@ -3,7 +3,7 @@
  * @Author: mikey.yuqibin
  * @Date: 2019-08-12 15:47:54
  * @Last Modified by: mikey.yuqibin
- * @Last Modified time: 2020-08-09 12:52:58
+ * @Last Modified time: 2021-03-16 20:14:06
  */
 
 const path = require('path')
@@ -25,9 +25,9 @@ module.exports = {
         changeOrigin: true,
         autoRewrite: true,
         cookieDomainRewrite: true,
-        pathRewrite: {
-          '^/api': '/'
-        }
+        // pathRewrite: {
+        //   '^/api': '/'
+        // }
       }
     }
   },

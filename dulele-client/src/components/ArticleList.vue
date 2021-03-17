@@ -1,44 +1,20 @@
 <template>
   <div class="article-list-wrap">
-    <section
-      class="article-detail"
-      :class="{'curr': index % 2 === 1}"
-      v-for="(mon,index) in aChangeList"
-      :key="index"
-    >
+    <section class="article-detail" :class="{'curr': index % 2 === 1}" v-for="(mon,index) in aChangeList" :key="index">
       <h2 class="year-mon">{{mon.mon}}, {{mon.year}}</h2>
       <ul class="mon-list">
-        <li
-          v-for="a in mon.list"
-          :key="a.id"
-        >
+        <li v-for="a in mon.list" :key="a.id">
           <div class="info">
-            <img
-              :src="a.coverphoto"
-              @click="goArtDetail(a.id)"
-              alt=""
-            >
-            <span
-              class="title ell"
-              @click="goArtDetail(a.id)"
-            >{{a.title}}</span>
+            <img :src="a.coverphoto" @click="goArtDetail(a.id)" alt="">
+            <span class="title ell" @click="goArtDetail(a.id)">{{a.title}}</span>
             <span class="author-and-count">
-              <span
-                class="author"
-                @click="goAuthorDetail(a.authorid)"
-              >{{a.author}}</span>
+              <span class="author" @click="goAuthorDetail(a.authorid)">{{a.author}}</span>
               <span class="count icon iconfont iconreadtimes"><span>{{a.readtimes}}</span></span>
             </span>
           </div>
           <div class="control">
-            <span
-              class="add icon el-icon-plus"
-              @click="addToListOne(a)"
-            ></span>
-            <span
-              class="play icon iconfont iconplay"
-              @click="addToPlayOne(a)"
-            ></span>
+            <span class="play icon iconfont iconplay" @click="addToPlayOne(a)"></span>
+            <span class="add icon el-icon-plus" @click="addToListOne(a)"></span>
           </div>
           <span class="date">
             {{numeralDate(new Date(a.createtime).getDate())}}
@@ -47,10 +23,7 @@
       </ul>
 
     </section>
-    <div
-      class="no-more-data"
-      v-show="noMoreDataFlag"
-    >哦豁 没有更多了~~</div>
+    <div class="no-more-data" v-show="noMoreDataFlag">哦豁 没有更多了~~</div>
     <div class="add-loading">
       <AddLoading v-show="loadingMoreFlag"></AddLoading>
     </div>
@@ -80,7 +53,7 @@ const monTextMap = [
 
 export default {
   name: "ArticleList",
-  data() {
+  data () {
     return {
       articleList: [],
       offset: 0,
@@ -134,16 +107,16 @@ export default {
   components: {
     AddLoading: () => import("./AddLoading"),
   },
-  created() {
+  created () {
     this.init();
   },
   methods: {
-    init() {
+    init () {
       this.size = this.condition.size || this.size;
       this.getArticleList();
     },
     // 获取日期序数词
-    numeralDate(num) {
+    numeralDate (num) {
       try {
         return numeral(+num).format("0o");
       } catch (error) {
@@ -151,22 +124,22 @@ export default {
       }
     },
     // 播放单个
-    addToPlayOne(a) {
+    addToPlayOne (a) {
       Bus.$emit("addToList", [a], true);
     },
     // 添加单个
-    addToListOne(a) {
+    addToListOne (a) {
       Bus.$emit("addToList", [a]);
     },
-    goArtDetail(aid) {
+    goArtDetail (aid) {
       this.$router.push({
         path: `/a/${aid}`,
       });
     },
-    goAuthorDetail(auid) {
+    goAuthorDetail (auid) {
       this.$router.push(`/author/${auid}`);
     },
-    async getArticleList() {
+    async getArticleList () {
       if (this.loadingMoreFlag) {
         return;
       }
@@ -233,7 +206,7 @@ export default {
       position: relative;
 
       &::before {
-        content: "";
+        content: '';
         width: 12px;
         height: 12px;
         display: inline-block;
@@ -315,14 +288,29 @@ export default {
           align-items: center;
           color: #999;
           justify-content: center;
-
+          font-size: 20px;
+          .play {
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            color: #fff;
+            font-size: 20px;
+            text-align: center;
+            background: #ce240a;
+            &:hover {
+              background: rgba(168, 29, 8, 0.9);
+              color: #fff;
+            }
+          }
+          .add {
+            &:hover {
+              color: @theme-color;
+            }
+          }
           .icon {
             padding: 4px;
             margin: 0 8px;
             cursor: pointer;
-            &:hover {
-              color: @theme-color;
-            }
           }
           .add {
             font-weight: bold;

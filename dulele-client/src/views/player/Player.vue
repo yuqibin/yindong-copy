@@ -1,218 +1,85 @@
 <template>
-  <div
-    class="play-wrap"
-    @click.stop=""
-  >
+  <div class="play-wrap" @click.stop="">
     <!-- 播放器 -->
-    <div
-      class="du-player-wrap"
-      ref="duPlay"
-    >
-      <audio
-        class="audio-hide"
-        ref="audio"
-        @canplay="audioReady"
-        :loop="loopModeIndex === 4"
-        :src="currPlay.audiourl"
-      ></audio>
+    <div class="du-player-wrap" ref="duPlay">
+      <audio class="audio-hide" ref="audio" @canplay="audioReady" :loop="loopModeIndex === 4" :src="currPlay.audiourl"></audio>
       <!-- 播放进度 -->
       <div class="play-progress-wrap">
-        <div
-          class="img-con br4"
-          @click="switchProgressPanel()"
-        >
-          <img
-            :src="currPlay.coverphoto || noAudioImg"
-            alt=""
-          >
+        <div class="img-con br4" @click="switchProgressPanel()">
+          <img :src="currPlay.coverphoto || noAudioImg" alt="">
           <div class="switch">
-            <span
-              class="top icon iconfont"
-              :class="[!audioTextPicker? 'iconup': 'icondown']"
-            ></span>
-            <span
-              class="bottom icon iconfont"
-              :class="[!audioTextPicker? 'icondown': 'iconup']"
-            ></span>
+            <span class="top icon iconfont" :class="[!audioTextPicker? 'iconup': 'icondown']"></span>
+            <span class="bottom icon iconfont" :class="[!audioTextPicker? 'icondown': 'iconup']"></span>
           </div>
         </div>
-        <div
-          class="a-title ell"
-          @click.stop="goArtDetail(currPlay.id)"
-        >{{currPlay.title}}</div>
+        <div class="a-title ell" @click.stop="goArtDetail(currPlay.id)">{{currPlay.title}}</div>
         <div class="progress">
-          <span
-            class="author-name"
-            @click.stop="goAuthorDetail(currPlay.authorid)"
-          >{{currPlay.author}}</span>
+          <span class="author-name" @click.stop="goAuthorDetail(currPlay.authorid)">{{currPlay.author}}</span>
           {{seToMinSe(currentAudioTime)}} / {{seToMinSe(audioDuration)}}
         </div>
       </div>
       <!-- 播放暂停上下首 -->
       <div class="play-btns-wrap">
-        <span
-          class="icon iconfont iconprev"
-          @click="prevOrNextPlay(-1)"
-        ></span>
-        <span
-          class="play icon iconfont"
-          @click="playAndSuspend"
-          :class="[playing ? 'iconzanting' : 'iconplay']"
-        ></span>
-        <span
-          class="icon iconfont iconnext"
-          @click="prevOrNextPlay(1)"
-        ></span>
+        <span class="icon iconfont iconprev" @click="prevOrNextPlay(-1)"></span>
+        <span class="play icon iconfont" @click="playAndSuspend" :class="[playing ? 'iconzanting' : 'iconplay']"></span>
+        <span class="icon iconfont iconnext" @click="prevOrNextPlay(1)"></span>
       </div>
       <!-- 其他控制 -->
       <div class="other-control-wrap">
-        <span
-          @click="volumePicker = !volumePicker"
-          class="volume icon iconfont"
-          :class="[volume ? 'iconvoice' : 'iconno-voice', volumePicker ? 'curr' : '']"
-        >
-          <div
-            class="slider-wrap"
-            @click.stop=""
-          >
+        <span @click="volumePicker = !volumePicker" class="volume icon iconfont" :class="[volume ? 'iconvoice' : 'iconno-voice', volumePicker ? 'curr' : '']">
+          <div class="slider-wrap" @click.stop="">
             <!-- v-show="volumePicker" -->
-            <el-slider
-              class="volume-control"
-              :class="{'curr': volumePicker}"
-              v-model="volume"
-              :show-tooltip="false"
-              vertical
-              height="100px"
-              @click.stop=""
-            >
+            <el-slider class="volume-control" :class="{'curr': volumePicker}" v-model="volume" :show-tooltip="false" vertical height="100px" @click.stop="">
             </el-slider>
           </div>
         </span>
-        <span
-          @click="loopModeChange"
-          class="loop-mode icon iconfont"
-          :class="loopMode"
-        ></span>
-        <span
-          @click="platListPicker = !platListPicker"
-          class="play-list icon iconfont iconlist"
-          :class="{'curr' : platListPicker}"
-        > <span class="num">{{playList.length}}</span> </span>
-        <el-popover
-          class="tips"
-          placement="bottom"
-          width="160"
-          trigger="manual"
-          content="已添加至播放列表"
-          v-model="addSuccessTips"
-        >
+        <span @click="loopModeChange" class="loop-mode icon iconfont" :class="loopMode"></span>
+        <span @click="platListPicker = !platListPicker" class="play-list icon iconfont iconlist" :class="{'curr' : platListPicker}"> <span class="num">{{playList.length}}</span> </span>
+        <el-popover class="tips" placement="bottom" width="160" trigger="manual" content="已添加至播放列表" v-model="addSuccessTips">
         </el-popover>
       </div>
       <!-- 进度条 可拖拽切换进度 -->
-      <div
-        class="progress-bar"
-        v-show="audioDuration"
-      >
-        <el-slider
-          v-model="progressBarVal"
-          :max="audioDuration"
-          @change="progressBarChange"
-          :show-tooltip="false"
-        ></el-slider>
+      <div class="progress-bar" v-show="audioDuration">
+        <el-slider v-model="progressBarVal" :max="audioDuration" @change="progressBarChange" :show-tooltip="false"></el-slider>
       </div>
     </div>
     <!-- 播放列表 -->
-    <div
-      class="play-list-wrap"
-      :class="{'curr': platListPicker}"
-    >
-      <img
-        class="bg"
-        v-show="currPlay.coverphoto"
-        :src="currPlay.coverphoto"
-        alt=""
-      >
+    <div class="play-list-wrap" :class="{'curr': platListPicker}">
+      <img class="bg" v-show="currPlay.coverphoto" :src="currPlay.coverphoto" alt="">
       <div class="l-title">
         <span class="name">播放列表<span v-show="playList.length">({{playList.length}})</span></span>
-        <span
-          class="remove-all"
-          @click="removeAll"
-        >
+        <span class="remove-all" @click="removeAll">
           清空<span class="icon iconfont icondel"></span>
         </span>
       </div>
       <div class="list-wrap">
-        <ul
-          v-show="playList.length"
-          class="a-list scroll-wrap"
-          ref="listShowPanel"
-        >
-          <li
-            v-for="a in playList"
-            :key="a.id"
-            :class="{'curr': a.id === currPlay.id}"
-            @click="pickOnePlay(a.id)"
-          >
-            <div
-              class="name ell"
-              :title="a.title"
-            >{{a.title}}</div>
-            <div
-              class="author ell"
-              :title="a.author"
-            >{{a.author}}</div>
+        <ul v-show="playList.length" class="a-list scroll-wrap" ref="listShowPanel">
+          <li v-for="a in playList" :key="a.id" :class="{'curr': a.id === currPlay.id}" @click="pickOnePlay(a.id)">
+            <div class="name ell" :title="a.title">{{a.title}}</div>
+            <div class="author ell" :title="a.author">{{a.author}}</div>
             <div class="remove-this">
-              <span
-                class="icon iconfont icondel"
-                @click.stop="removeThis(a.id)"
-              ></span>
+              <span class="icon iconfont icondel" @click.stop="removeThis(a.id)"></span>
             </div>
           </li>
         </ul>
         <!-- 无播放列表 -->
-        <div
-          class="no-data"
-          v-show="!playList.length"
-        >
-          <svg
-            class="icon"
-            aria-hidden="true"
-          >
+        <div class="no-data" v-show="!playList.length">
+          <svg class="icon" aria-hidden="true">
             <use :xlink:href="'#iconno-data'"></use>
           </svg>
         </div>
       </div>
     </div>
     <!-- 音频内容面板 -->
-    <div
-      class="audio-text-panel"
-      v-show="playList.length"
-      @click="platListPicker = false"
-      :class="{'curr': audioTextPicker}"
-    >
+    <div class="audio-text-panel" v-show="playList.length" @click="platListPicker = false" :class="{'curr': audioTextPicker}">
       <div class="a-title">{{currPlay.title}}
-        <span
-          class="close icon iconfont iconclose"
-          @click="audioTextPicker = false"
-        ></span>
+        <span class="close icon iconfont iconclose" @click="audioTextPicker = false"></span>
         <!-- <span class="remove-all icon iconfont icondel"></span> -->
       </div>
       <!-- copy -->
-      <CopyText
-        class="copy-c"
-        :c-text="copyText"
-      ></CopyText>
-      <img
-        :src="currPlay.coverphoto"
-        class="img-blur"
-        alt=""
-      >
-      <div
-        id="nice"
-        class="text markdown-body scroll-wrap"
-        ref="audioText"
-        v-html="currPlayText"
-      >
+      <CopyText class="copy-c" :c-text="copyText"></CopyText>
+      <img :src="currPlay.coverphoto" class="img-blur" alt="">
+      <div id="nice" class="text markdown-body scroll-wrap" ref="audioText" v-html="currPlayText">
       </div>
     </div>
   </div>
@@ -232,7 +99,7 @@ const loopModeList = [
 
 export default {
   name: "player",
-  data() {
+  data () {
     return {
       copyText: "",
       addSuccessTips: false,
@@ -257,10 +124,10 @@ export default {
     randomList: function () {
       let len = this.playList.length - 1;
       let list = [];
-      for (let i = 0; i <= len; i++) {
+      for (let i = 0;i <= len;i++) {
         list.push(i);
       }
-      for (let j = 0; j <= len; j++) {
+      for (let j = 0;j <= len;j++) {
         let v = list[j];
         let rm = randomM(len);
         list[j] = list[rm];
@@ -269,10 +136,10 @@ export default {
       return list;
     },
     currPlayText: function () {
-      let ddd = this.$markdowner.makeHtml(
-        escapeHtml(this.currPlay.content || "")
-      );
-      console.log(ddd);
+      // let ddd = this.$markdowner.makeHtml(
+      //   escapeHtml(this.currPlay.content || "")
+      // );
+      // console.log(ddd);
       return this.$markdowner.makeHtml(escapeHtml(this.currPlay.content || ""));
     },
     // 当前播放对象
@@ -344,21 +211,21 @@ export default {
   components: {
     CopyText: () => import("../../components/CopyText"),
   },
-  created() {
+  created () {
     this.init();
   },
-  mounted() {
+  mounted () {
     this.resetAllFlag();
     // setTimeout(() => {
     //   this.keyboardToChangeAudio();
     // }, 0);
   },
   methods: {
-    init() {
+    init () {
       this.watchNewAddToPlay();
     },
     // 当前播放结束 或者 上下切换 flag  0表示当前播放结束进入下一个  1表示下一首   -1表示上一首
-    prevOrNextPlay(flag) {
+    prevOrNextPlay (flag) {
       switch (this.loopModeIndex) {
         // 单曲循环 无序处理 audio loop 自带循环功能
         case 4:
@@ -381,18 +248,18 @@ export default {
       }
     },
     // 播放中切换 先暂停
-    playingToPaused() {
+    playingToPaused () {
       this.playing = false;
       this.audio.pause();
     },
     // 切换完成  间隔500ms 播放
-    changeEndToPlay() {
+    changeEndToPlay () {
       setTimeout(() => {
         this.playAndSuspend();
       }, 500);
     },
     // 单曲循环  可以切换上下  但是播放结束不做任何
-    singlePlay(flag) {
+    singlePlay (flag) {
       if (!flag) {
         return;
       }
@@ -408,7 +275,7 @@ export default {
       }
     },
     // 列表循环播放  flag  0表示当前播放结束进入下一个  1表示下一首   -1表示上一首
-    listRepeatPlay(flag) {
+    listRepeatPlay (flag) {
       if (flag >= 0) {
         this.currPlayIndex++;
         this.currPlayIndex =
@@ -427,7 +294,7 @@ export default {
       }
     },
     // 顺序播放  flag  0表示当前播放结束进入下一个  1表示下一首   -1表示上一首
-    orderListPlay(flag) {
+    orderListPlay (flag) {
       if (flag >= 0 && this.currPlayIndex < this.playList.length - 1) {
         if (flag) {
           this.playingToPaused();
@@ -442,7 +309,7 @@ export default {
       }
     },
     // 随机播放 flag  0表示当前播放结束进入下一个  1表示下一首   -1表示上一首
-    randomPlay(flag) {
+    randomPlay (flag) {
       if (flag >= 0 && this.randomIndex < this.playList.length - 1) {
         if (flag) {
           this.playingToPaused();
@@ -457,7 +324,7 @@ export default {
       }
     },
     // 替换并播放
-    replaceAudioList() {
+    replaceAudioList () {
       Bus.$on("replaceList", (list) => {
         if (list && Array.isArray && list.length) {
           this.playList = [];
@@ -468,7 +335,7 @@ export default {
       });
     },
     // 添加（是否播放）
-    addAudioToList() {
+    addAudioToList () {
       Bus.$on("addToList", (list, flag) => {
         let playList = this.playList;
         if (Array.isArray(list) && list.length) {
@@ -488,19 +355,19 @@ export default {
       });
     },
     // 播放器容器接受数据
-    watchNewAddToPlay() {
+    watchNewAddToPlay () {
       this.replaceAudioList();
       this.addAudioToList();
     },
     // 添加成功提示
-    addSuccessTipsHandle() {
+    addSuccessTipsHandle () {
       this.addSuccessTips = true;
       setTimeout(() => {
         this.addSuccessTips = false;
       }, 1000);
     },
     // 播放暂停
-    playAndSuspend() {
+    playAndSuspend () {
       let audio = this.audio;
       if (!this.playList.length) {
         return;
@@ -509,7 +376,7 @@ export default {
       audio.paused ? audio.play() : audio.pause();
     },
     // 音频准备完毕
-    audioReady(flag) {
+    audioReady (flag) {
       let that = this;
       let index = 0;
       let audio = that.audio;
@@ -520,12 +387,14 @@ export default {
       }
       let duration = Math.ceil(audio.duration);
       that.audioDuration = duration;
-      that.currentAudioTime = Math.ceil(index + 1);
+      that.currentAudioTime = Math.ceil(audio.currentTime + 1)
+      // that.currentAudioTime = Math.ceil(index + 1);
       window.clearInterval(that.audioTimer);
       that.audioTimer = setInterval(() => {
         if (that.playing) {
           index++;
-          that.currentAudioTime = Math.ceil(index + 1);
+          // that.currentAudioTime = Math.ceil(index + 1);
+          that.currentAudioTime = Math.ceil(audio.currentTime + 1)
           that.progressBarVal = audio.currentTime + 1;
         }
         if (index >= duration - 1) {
@@ -539,12 +408,12 @@ export default {
       }
     },
     // 从列表中选择一个播放
-    pickOnePlay(id) {
+    pickOnePlay (id) {
       let that = this;
       let index = null;
       let flag = this.loopModeIndex === 3; // 随机播放模式
       let list = flag ? that.randomPlayList : this.playList;
-      for (let i = 0; i < list.length; i++) {
+      for (let i = 0;i < list.length;i++) {
         if (list[i].id === id) {
           index = i;
           break;
@@ -560,15 +429,15 @@ export default {
       }
     },
     // 列表清空
-    removeAll() {
+    removeAll () {
       this.playList = [];
       this.playing = false;
       this.progressBarVal = 0;
     },
     // 从列表选择一个移除列表
-    removeThis(id) {
+    removeThis (id) {
       let list = this.playList;
-      for (let i = 0; i < list.length; i++) {
+      for (let i = 0;i < list.length;i++) {
         if (id === list[i].id) {
           list.splice(i, 1);
           break;
@@ -576,11 +445,11 @@ export default {
       }
     },
     // 拖拽进度结束
-    progressBarChange() {
+    progressBarChange () {
       this.audioReady(this.progressBarVal);
     },
     // 监听键盘事件   空格：播放/暂停   左右：上下首
-    keyboardToChangeAudio() {
+    keyboardToChangeAudio () {
       let that = this;
       document.onkeyup = (e) => {
         if (that.currPlay.audiourl) {
@@ -601,7 +470,7 @@ export default {
       };
     },
     // 点击其他区域重置面板显示开关
-    resetAllFlag() {
+    resetAllFlag () {
       let that = this;
       document.body.addEventListener("click", (e) => {
         try {
@@ -616,7 +485,7 @@ export default {
       });
     },
     // 切换循环模式
-    loopModeChange() {
+    loopModeChange () {
       if (this.loopModeIndex === loopModeList.length) {
         this.loopModeIndex = 1;
         return;
@@ -624,18 +493,18 @@ export default {
       this.loopModeIndex++;
     },
     // 秒转分秒  136 to  02:16
-    seToMinSe(s) {
+    seToMinSe (s) {
       return seToMinSe(s);
     },
-    switchProgressPanel() {
+    switchProgressPanel () {
       if (this.playList.length) {
         this.audioTextPicker = !this.audioTextPicker;
       }
     },
-    goArtDetail(aid) {
+    goArtDetail (aid) {
       this.$router.push(`/a/${aid}`);
     },
-    goAuthorDetail(auid) {
+    goAuthorDetail (auid) {
       this.$router.push(`/author/${auid}`);
     },
   },
@@ -1066,7 +935,7 @@ export default {
     font-size: 20px;
     letter-spacing: 3px;
     font-family: TChinese, SimSun, FangSong, STSong, STZhongsong, LiSu, KaiTi,
-      "Microsoft YaHei";
+      'Microsoft YaHei';
     .close {
       position: absolute;
       right: 4px;
