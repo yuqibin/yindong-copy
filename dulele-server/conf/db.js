@@ -6,31 +6,31 @@ let REDIS_CONF
 if (env === 'dev') {
   // mysql
   MYSQL_CONF = {
-    host: 'localhost',
-    user: 'root',
-    password: 'qwerdfgg',
-    port: 3306,
-    database: 'dulele'
+    host: '******',
+    user: '******',
+    password: '******',
+    port: ******,
+    database: '******'
   }
   // redis
   REDIS_CONF = {
-    port: 6379,
-    host: '127.0.0.1'
+    port: ******,
+    host: '******'
   }
 }
 
 if (env === 'production') {
   MYSQL_CONF = {
-    host: 'localhost',
-    user: 'root',
-    password: 'qweRdfgg123_',
-    port: 3306,
-    database: 'dulele'
+    host: '******',
+    user: '******',
+    password: '******',
+    port: ******,
+    database: '******'
   }
   // redis
   REDIS_CONF = {
-    port: 6379,
-    host: '127.0.0.1'
+    port: ******,
+    host: '******'
   }
 }
 
